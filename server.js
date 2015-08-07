@@ -1,10 +1,13 @@
 var http = require('http');
 
+//this is your resource
 var messages = [{message: 'hello world'}];
 
 var port = 8887;
 
 var onRequest = function(req, res) {
+
+    //code for GET method
     if (req.method === 'GET') {
         res.statusCode = 200;
 
@@ -20,9 +23,14 @@ var onRequest = function(req, res) {
         res.setHeader('X-Frame-Options', 'SAMEORIGIN');
         res.setHeader('Content-Security-Policy', "default-src 'self' devmountain.github.io");
         res.end(JSON.stringify(messages));
+
+    //code for POST method
     } else if (req.method == 'POST') {
        var postData = '';
+       //this is just how the web sends data over the web
        req.on('data', function(chunk) {
+           var chunkie = toString(chunk);
+           console.log(chunkie);
            postData += chunk.toString();
         });    
         req.on('end', function() {
@@ -39,6 +47,8 @@ var onRequest = function(req, res) {
             });
             res.end(JSON.stringify(messages));
        });
+
+
     } else if (req.method === 'OPTIONS') {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
@@ -49,6 +59,6 @@ var onRequest = function(req, res) {
 
 var server = http.createServer(onRequest).listen(port);
 
-console.log('I\'m watching you...', port);
+console.log('I\'m watching you...', server.address());
 
 

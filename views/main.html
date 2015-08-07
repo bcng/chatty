@@ -5,7 +5,6 @@
     <h4>Latest Chats:</h4>
     <form ng-submit="addMessage()">
         <input type="text" ng-model="msg"></input>
-        <input type="submit"></input>
     </form>
     <div class="jumbotron" ng-repeat="message in messages">
         {{message}}
