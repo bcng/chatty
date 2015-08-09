@@ -1,16 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 var app = express();
+
+///////////////// MIDDLEWARE
 
 //any request that comes in, look at what comes in if it is JSON convert the req to req.body
 app.use(bodyParser.json());
-
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'OPTIONS, GET, POST');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
+app.use('/', cors());
+app.use(express.static(__dirname + '/public'));
 
 var messages = [{message: 'hello world'}];
 
@@ -29,8 +27,16 @@ app.put('/api/person/:id', function(req, res){
     res.send("your id is " + name);
 });
 
+var port = 8887;
 
-app.listen(8887);
+app.listen(port, function(err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Listening on port: ' + port);
+    }
+
+});
 
 
 // Example of a body we're getting
