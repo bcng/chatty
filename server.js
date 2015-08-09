@@ -10,7 +10,10 @@ app.use(bodyParser.json());
 app.use('/', cors());
 app.use(express.static(__dirname + '/public'));
 
-var messages = [{message: 'hello world'}];
+var messages = [{
+    username: 'brian',
+    message: 'hello world',
+}];
 
 app.get('/', function(req, res) {
     res.send(JSON.stringify(messages));
@@ -22,7 +25,7 @@ app.post('/', function(req, res) {
     res.send(messages);
 });
 
-app.put('/api/person/:id', function(req, res){
+app.put('/api/person/:id', function(req, res) {
     var name = req.params.id;
     res.send("your id is " + name);
 });
